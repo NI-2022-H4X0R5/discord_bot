@@ -1,0 +1,21 @@
+{
+    "chlamydiae" : {
+        "name" : "Chlamydiae",
+        "description" : "La description",
+        "transmission" : "",
+        "incubation_time" : "lorem ipsum",
+        "symptoms" : [
+            "Brulures urinaires",
+            "Écoulements blanchâtre",
+            "Demangeaison annales"
+        ],
+        "treatments" : [
+            "lorem ipsum"
+        ],
+        "stats" : [],
+        "affected_pop" : [
+            "Jeunes de 16 à 25 ans"
+        ],
+        "link" : []
+    }
+}
