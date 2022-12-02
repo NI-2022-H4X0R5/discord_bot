@@ -47,7 +47,6 @@ if True:
     discord.app_commands.Choice(name = "Syphilis", value = "2"),
     discord.app_commands.Choice(name = "VIH / Sida", value = "3"),
 ])
-@discord.app_commands.checks.has_permissions(administrator=True)
 async def informations(inte : discord.Interaction, ist : discord.app_commands.Choice[str]):
     ist_data = requests.get(url="http://194.9.172.252:10000/api/ist").json()[int(ist.value)]
     embed = discord.Embed(title = ist_data['name'], description=ist_data['description'])
