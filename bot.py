@@ -1,4 +1,5 @@
 import discord, datetime as dt, os, requests, json
+from typing import Literal
 from discord.ext import commands
 import config, functions
 
@@ -70,30 +71,32 @@ if True:
 @tree.command(name="informations", description="Découvre de nombreuses IST !")
 @discord.app_commands.describe(ist = "Le nom de l'IST pour laquelle tu veux en apprendre plus.")
 @discord.app_commands.choices( ist = [
-    discord.app_commands.Choice(name = "Chlamydiae", value = "0")
+    discord.app_commands.Choice(name = "Chlamydiae", value = "0"),
+    discord.app_commands.Choice(name = "Hépatite B", value = "1"),
+    discord.app_commands.Choice(name = "Syphilis", value = "2"),
+    discord.app_commands.Choice(name = "VIH / Sida", value = "3"),
 ])
 @discord.app_commands.checks.has_permissions(administrator=True)
 async def informations(inte : discord.Interaction, ist : discord.app_commands.Choice[str]):
-    # ist_data = functions.get_json("ist_infos.json")[ist.value]
-    ist_data = requests.get(url="http://194.9.172.252:10000/api/ist").json()[int(ist.value)]
+    ist_data = functions.get_json("ist_infos.json")[int(ist.value)]
+    # ist_data = requests.get(url="http://194.9.172.252:10000/api/ist").json()[int(ist.value)]
     embed = discord.Embed(title = ist_data['name'], description=ist_data['description'])
 
-    if 'transmission' in ist_data.keys():
+    if 'transmission' in ist_data.keys() and ist_data['transmission'] != None:
         embed.add_field(name = "Transmission", value = "・" + '\n・'.join(ist_data['transmission']))
-    if 'symptoms' in ist_data.keys():
+    if 'symptoms' in ist_data.keys() and ist_data['symptoms'] != None:
         embed.add_field(name = "Symptômes", value = "・" + '\n・'.join(ist_data['symptoms']))
-    if 'treatments' in ist_data.keys():
-        embed.add_field(name = "Traitements", value = "・" + '\n・'.join(ist_data['treatments']))
-    if 'incubation_time' in ist_data.keys():
+    if 'risks' in ist_data.keys() and ist_data['risks'] != None:
+        embed.add_field(name = "Conséquences", value = "・" + '\n・'.join(ist_data['risks']))
+    if 'incubation_time' in ist_data.keys() and ist_data['incubation_time'] != "":
         embed.add_field(name = "Temps d'incubation", value = ist_data['incubation_time'])
-    if 'stats' in ist_data.keys():
+    if 'treatments' in ist_data.keys() and ist_data['treatments'] != None:
+        embed.add_field(name = "Traitements", value = "・" + '\n・'.join(ist_data['treatments']))
+    if 'affected_pop' in ist_data.keys() and ist_data['affected_pop'] != None:
+        embed.add_field(name = "Population touchée", value = "・" + '\n・'.join(ist_data['affected_pop']), inline = False)
+    if 'stats' in ist_data.keys() and ist_data['stats'] != None:
         embed.add_field(name = "Statistiques", value = "・" + '\n・'.join(ist_data['stats']))
-    if 'affected_pop' in ist_data.keys():
-        embed.add_field(name = "Population touchée", value = "・" + '\n・'.join(ist_data['affected_pop']))
-    if 'link' in ist_data.keys():
-        embed.add_field(name = "Liens", value = ist_data['link'])
-    
-    print(embed.fields[0])
+
     await inte.response.send_message(embed = embed)
 
 
@@ -101,24 +104,40 @@ async def informations(inte : discord.Interaction, ist : discord.app_commands.Ch
 
 
 
-
-
-
-
-@tree.command(name="help", description="Liste de toutes les commandes help existantes.")
-@discord.app_commands.describe(feature = "La fonctionnalité pour laquelle tu as besoin d'aide.")
-@discord.app_commands.choices( feature = [
-    discord.app_commands.Choice(name = "1", value = "1")
-])
+@tree.command(name="add_question", description="Ajouter une question dans le quizz.")
+@discord.app_commands.describe(question = "La question à ajouter")
 @discord.app_commands.checks.has_permissions(administrator=True)
-async def help(inte : discord.Interaction, feature : discord.app_commands.Choice[str]):
-    pass
-@help.error
-async def on_command_error(inte: discord.Interaction, error):
-    if isinstance(error, discord.app_commands.MissingPermissions):
-        translation : dict = functions.get_translation(inte.data['options'][0]['value'], 'help')
-        message = translation[inte.data['options'][1]['value']]
-        await inte.response.send_message(message.replace('{config.PREFIX}', config.PREFIX))
+async def add_question(inte : discord.Interaction, question : str, bonnereponse : str, reponse2 : str, reponse3 : str):
+    url = "http://194.9.172.252:10000/api/questions"
+    post_data = {
+        "question" : {
+            "name": "test",
+            "type": "question",
+            "ageRange": "adulte",
+            "content": question,
+            "hintLabel": "Aide",
+            "hintContent": ""
+        },
+        "responses": [
+        {
+            "score": 1,
+            "content": bonnereponse
+        },
+        {
+            "score": 0,
+            "content": reponse2
+        },
+        {
+            "score": 0,
+            "content": reponse3
+        }
+    ]
+    }
+    requests.post(url, json = post_data)
+
+
+
+    await inte.response.send_message("La question a été ajoutée avec succès !")
 
 
 
