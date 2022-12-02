@@ -105,6 +105,10 @@ async def add_question(inte : discord.Interaction, question : str, question_name
         await inte.response.send_message("Ce nom de question est déjà utilisé !")
     else:
         await inte.response.send_message("La question a été ajoutée avec succès !")
+@add_question.error
+async def on_command_error(inte: discord.Interaction, error):
+    if isinstance(error, discord.app_commands.MissingPermissions):
+        await inte.response.send_message("Oh non, malheureux ! Tu n'as pas les permissions pour faire cette action ! Il faut être administrateur.")
 
 
 discord_bot.run(config.TOKEN)
