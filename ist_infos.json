@@ -1,0 +1,125 @@
+[
+    {
+        "id":1,
+        "name":"Chlamydiae",
+        "description":"La chlamydiae est l'infection sexuellement transmissible la plus répandue, car elle se transmet facilement.",
+        "transmission":[
+            "Pénétration",
+            "Fellation",
+            "Cunnilingus",
+            "Frottement de parties génitales"
+        ],
+        "symptoms":[
+            "Brulures urinaires",
+            "Écoulements blanchâtre",
+            "Démangeaison annales"
+        ],
+        "risks":[
+            "Stérilitée",
+            "Douleurs au bas du ventre chez la femme"
+        ],
+        "treatments":[
+            "Antibiotiques"
+        ],
+        "affected_pop":[
+            "Jeunes de 16 à 25 ans",
+            "Plus les femmes que les hommes"
+        ],
+        "stats":[
+            "En 2018, 133 000 infections diagnostiquées en France",
+            "285 femmes sur 100 000",
+            "112 hommes sur 100 000"
+        ],
+        "screening":[
+            "Analyse d'urine",
+            "Prélèvement vaginal",
+            " urétral",
+            " anal ou oropharyngé"
+        ],
+        "incubation_time":"1 semaine"
+    },
+    {
+        "id":2,
+        "name":"Hépatite B",
+        "description":"Un hépatite est une inflammation du foie, ce qui engendre une dégradation du foie et qui peut evoluer en cancer. L'hépatite B elle a deux cycle : un aigu qui dure 6 mois à partir de la contamination. Si le corps ne vainc pas le virus, il se transforme en hépatite chronique",
+        "transmission":[
+            "Pénétration",
+            "Fellation",
+            "Cunnilingus",
+            "Pendant la grossesse",
+            "Pendant l'allaitement"
+        ],
+        "symptoms":[
+            "Fatigue",
+            "Perte d'appetit",
+            "Jaunissement de la peau"
+        ],
+        "risks":[
+            "Cancer",
+            "Cirrhose"
+        ],
+        "treatments":["Traitement viral à vie"],
+        "affected_pop":["Tout le monde"],
+        "stats":[
+            "En France, 135 000 personnes sont infectées"
+        ],
+        "screening":[
+            "Prise de sang"
+        ],
+        "incubation_time":"1 à 3 mois"
+    },
+    {
+        "id":3,
+        "name":"Syphilis",
+        "description":"La syphilis est d'origine bactérienne est à causé près de 5 millions de mort au 15ème siècle.",
+        "transmission":[
+            "Par contact avec une chancre lors d'un rapport"
+        ],
+        "symptoms":[
+            "Apparition d'une chancre syphillique sur un les points d'entrée",
+            "Tâches rose temporaires sur la peau"
+        ],
+        "risks":[
+            "Troubles neurologiques"
+        ],
+        "treatments":["Injection de péniciline"],
+        "affected_pop":[
+            "Tout le monde, mais plus élevé chez les personnes ayant des rapports homosexuel"
+        ],
+        "stats":[
+            "En 2020, 2500 cas on été diagnostiqués",
+            "En 2021, 3300 cas on été diagnostiqués"
+        ],
+        "screening":["Prise de sang"],
+        "incubation_time":"10 à 90 jours"
+    },
+    {
+        "id":4,
+        "name":"VIH / Sida",
+        "description":"Le VIH (Virus de l'Immunodéficience Humaine) est un virus qui attaque et affaibli le système immunitaire. On ne meurt pas du sida directement, mais souvent d'une autre maladie car le système immunitaire de la personne est déjà affaibli.",
+        "transmission":[
+            "Pénétration",
+            "Echange de sang (blessure, aguille, etc)"
+        ],
+        "symptoms":[
+            "Fièvre",
+            "Fatigue",
+            "Maux de tête",
+            "Douleurs articulaires",
+            "Douleurs musculaire"
+        ],
+        "risks":[],
+        "treatments":[
+            "Trithérapie à vie"
+        ],
+        "affected_pop":[
+            "Tout le monde"
+        ],
+        "stats":[
+            "En 2021, 38,4 millions de personnes vivent avec le virus dans le monde",
+            "Chaque jour, il y a environ 4000 nouvelles infection diagnostiquées"
+        ],
+        "screening":["Prise de sang"],
+        "incubation_time":"10 à 15 jours"
+    }
+]
