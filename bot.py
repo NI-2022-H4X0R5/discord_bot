@@ -1,4 +1,4 @@
-import discord, datetime as dt, os
+import discord, datetime as dt, os, requests, json
 from discord.ext import commands
 import config, functions
 
@@ -70,25 +70,32 @@ if True:
 @tree.command(name="informations", description="Découvre de nombreuses IST !")
 @discord.app_commands.describe(ist = "Le nom de l'IST pour laquelle tu veux en apprendre plus.")
 @discord.app_commands.choices( ist = [
-    discord.app_commands.Choice(name = "Chlamydiae", value = "chlamydiae")
+    discord.app_commands.Choice(name = "Chlamydiae", value = "0")
 ])
 @discord.app_commands.checks.has_permissions(administrator=True)
-async def help(inte : discord.Interaction, ist : discord.app_commands.Choice[str]):
-    ist_data = functions.get_json("ist_infos.json")[ist.value]
+async def informations(inte : discord.Interaction, ist : discord.app_commands.Choice[str]):
+    # ist_data = functions.get_json("ist_infos.json")[ist.value]
+    ist_data = requests.get(url="http://194.9.172.252:10000/api/ist").json()[int(ist.value)]
     embed = discord.Embed(title = ist_data['name'], description=ist_data['description'])
-    print(ist_data)
-    for type, data in ist_data.items():
-        if data == [] or data == "":
-            continue
-        elif isinstance(data, dict):
-            value = f"・{data[0]}"
-            for el in data[1:] :
-                value += f"\n・{el}"
-        else :
-            value = data
-        embed.add_field(name = type.capitalize(), value=value)
-    await inte.response.send_message(embed = embed)
+
+    if 'transmission' in ist_data.keys():
+        embed.add_field(name = "Transmission", value = "・" + '\n・'.join(ist_data['transmission']))
+    if 'symptoms' in ist_data.keys():
+        embed.add_field(name = "Symptômes", value = "・" + '\n・'.join(ist_data['symptoms']))
+    if 'treatments' in ist_data.keys():
+        embed.add_field(name = "Traitements", value = "・" + '\n・'.join(ist_data['treatments']))
+    if 'incubation_time' in ist_data.keys():
+        embed.add_field(name = "Temps d'incubation", value = ist_data['incubation_time'])
+    if 'stats' in ist_data.keys():
+        embed.add_field(name = "Statistiques", value = "・" + '\n・'.join(ist_data['stats']))
+    if 'affected_pop' in ist_data.keys():
+        embed.add_field(name = "Population touchée", value = "・" + '\n・'.join(ist_data['affected_pop']))
+    if 'link' in ist_data.keys():
+        embed.add_field(name = "Liens", value = ist_data['link'])
     
+    print(embed.fields[0])
+    await inte.response.send_message(embed = embed)
+
 
 
 
